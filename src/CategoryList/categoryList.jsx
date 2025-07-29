@@ -3,9 +3,10 @@ import axios from "../axios";
 import Loading from "../Loading/loading";
 import SearchBar from "../SearchBar/searchBar";
 
-const CategoryList = ({ filteredItems, setGenre, setPage }) => {
+const CategoryList = ({ filteredItems, setGenre, setPage, children }) => {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
+
   useEffect(() => {
     const fetchCategories = async () => {
       const response = await axios.get("/genres");
@@ -14,54 +15,53 @@ const CategoryList = ({ filteredItems, setGenre, setPage }) => {
     };
     fetchCategories();
   }, []);
+
   const renderContent = () => {
     if (loading) {
       return <Loading theme={"primary"} />;
     }
     return (
-      <div className="ps-3 w-100  align-items-center justify-content-between ">
-        <ul className="nav d-flex">
-          <li
-            className="nav-item"
+      <div className="px-2 pt-2 w-100 ">
+        <div className="category-container ">
+          <center
+            className="nav-item "
             onClick={() => {
-              // filteredItems();
               setGenre();
               setPage(1);
             }}
           >
-            <a className="nav-link" href="#">
-              All Movies
-            </a>
-          </li>
+            <a href="#">All Movies</a>
+          </center>
           {categories.map((category) => (
-            <li
-              className="nav-item "
+            <center
+              className="nav-item"
               key={category.id}
               onClick={() => {
-                // filteredItems(category.id);
                 setGenre(category.id);
                 setPage(1);
               }}
+              // style={{backgroundColor:{category.id===Gener?"blue":"black"}}}
             >
-              <a className="nav-link" href="#">
-                {category.name}
-              </a>
-            </li>
+              <a href="#">{category.name}</a>
+            </center>
           ))}
-        </ul>
-        <SearchBar></SearchBar>
+        </div>
+        {children}
+        {/* <SearchBar className="search-bar" /> */}
       </div>
     );
   };
+
   return (
     <nav className="container mt-n5">
       <div
-        className="d-flex align-items-center bg-white rounded-3 shadow-lg py-4 col-md-11 space-between w-100 "
-        style={{ height: 150 }}
+        className="d-flex align-items-center bg-white rounded-3 shadow-lg py-4 col-md-11 space-between w-auto"
+        style={{ height: 160 }}
       >
         {renderContent()}
       </div>
     </nav>
   );
 };
+
 export default CategoryList;

@@ -7356,7 +7356,7 @@ fieldset:disabled .btn {
   margin-top: -1.5rem !important;
 }
 .mt-n5 {
-  margin-top: -3rem !important;
+  margin-top: -5rem !important;
 }
 .mt-n10 {
   margin-top: -10rem !important;
@@ -16626,3 +16626,34 @@ html:not([dir="rtl"]) .range-slider-ui.noUi-horizontal .noUi-handle {
   font-weight: 700;
 }
 /*# sourceMappingURL=theme.min.css.map */
+
+/* grid */
+.category-container {
+  margin-right: auto !important;
+  margin-left: auto !important;
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  gap: 5px;
+  align-items: stretch;
+}
+
+/* button style */
+.nav-item a {
+  display: block;
+  padding: 10px 15px;
+  background-color: #f1f1f1;
+  color: #333;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.nav-item a:hover {
+  background-color: #007bff; /* bachground color while hover */
+  color: white;
+}
+
+/* search bar*/
+.search-bar {
+  margin-top: 20px;
+}
