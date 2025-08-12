@@ -16,6 +16,9 @@ function App() {
   const [moviesItems, setMoviesItems] = useState([]);
   const [metadata, setMetadata] = useState([]);
   const [genre, setGenre] = useState();
+  const [searchedValueLength, setSearchedValueLength] = useState(0);
+  const [searchedValue, setSearchedValue] = useState();
+  // const [searchValue, setSearchValue] = useState("");
   const fetchData = async (genreId = null) => {
     setLoading(true);
     const response = await axios.get(
@@ -35,13 +38,29 @@ function App() {
     // console.log("meta data " + response.data.metadata);
     // response.data.metadata.map(each=>console.log("meta data2 " + each))
   };
+  const fetchOrkideh = async () => {
+    const response2 = await fetch(
+      "https://opium.feeja.ir/api/v1/branches/chalus/menu/categories",
+      {
+        "Content-Type": "application/json",
+      }
+    );
+    const result = response2.json();
+    console.log(result);
+  };
+
+  useEffect(() => {
+    fetchOrkideh();
+  }, []);
   const handleClick = (event) => {
     let newPage = page + event;
-    if (newPage !== 0 && newPage <= metadata.page_count) {
-      setPage(newPage);
+    if (searchedValueLength) {
+      searchItems(searchedValue, newPage);
+    } else {
+      if (newPage !== 0 && newPage <= metadata.page_count) {
+        setPage(newPage);
+      }
     }
-    // fetchData(page);
-    // console.log(`rendered page: ${newPage}`);
   };
 
   useEffect(() => {
@@ -54,41 +73,57 @@ function App() {
     if (moviesItems.length === 0) {
       return (
         <>
-          <div className="alert alert-warning text-center">
+          <div className="alert alert-warning text-center ">
             Sorry, no results found for your search.
           </div>
-          <img className="mx-auto mt-5 d-block" src={notFound} />
+          <img className="mx-auto mt-5 d-block fade-in-horiz" src={notFound} />
         </>
       );
     }
     // console.log(moviesItems);
     return <MoviesList movieItems={moviesItems} metadata={metadata} />;
   };
-  //search proccess
-  const searchItems = async (name) => {
-    setLoading(true);
-    const response = await axios.get(
-      `/movies?q=${name ? name : ""}&page={page}`
-    );
-    setLoading(false);
-    setMoviesItems(response.data.data);
+  // search proccess
+  const searchItems = async (name, newPage) => {
+    console.log("🚀 ~ searchItems ~ thisPage:", newPage);
+    try {
+      if (name) {
+        setLoading(true);
+
+        const response = await axios.get(`/movies?q=${name}&page=${newPage}`);
+        setMoviesItems(response.data.data);
+        setMetadata(response.data.metadata);
+      } else {
+        fetchData();
+      }
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // now not using
-  const filterItems = (genreId) => {
-    fetchData(genreId);
-  };
+  // not using now
+  // const filterItems = (genreId) => {
+  //   fetchData(genreId);
+  // };
   return (
     <div className="wrapper bg-faded-dark">
       <Header></Header>
       <center>
         <CategoryList
-          filteredItems={filterItems}
+          // filteredItems={filterItems}
           setGenre={setGenre}
           setPage={setPage}
-          // searchItems={searchItems}
         >
-          <SearchBar searchItems={searchItems} />
+          <SearchBar
+            searchItems={searchItems}
+            searchedValue={setSearchedValue}
+            searchedValueLength={setSearchedValueLength}
+            page={setPage}
+            // searchValue={searchValue}
+            // setSearchValue={setSearchValue}
+          />
         </CategoryList>
       </center>
       <div className="container mt-4">{renderContent()}</div>
@@ -100,24 +135,28 @@ function App() {
           changer={handleClick}
           thisPage={page}
           lastPage={metadata.page_count}
+          searchedValueLength={searchedValueLength}
         />
         <PageButton
           action="previous page"
           changer={handleClick}
           thisPage={page}
           lastPage={metadata.page_count}
+          searchedValueLength={searchedValueLength}
         />
         <PageButton
           action="next page"
           changer={handleClick}
           thisPage={page}
           lastPage={metadata.page_count}
+          searchedValueLength={searchedValueLength}
         />
         <PageButton
           action="last page"
           changer={handleClick}
           thisPage={page}
           lastPage={metadata.page_count}
+          searchedValueLength={searchedValueLength}
         />
       </center>
       <center>

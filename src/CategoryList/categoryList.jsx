@@ -3,7 +3,7 @@ import axios from "../axios";
 import Loading from "../Loading/loading";
 import SearchBar from "../SearchBar/searchBar";
 
-const CategoryList = ({ filteredItems, setGenre, setPage, children }) => {
+const CategoryList = ({ setGenre, setPage, children }) => {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
 
@@ -26,7 +26,7 @@ const CategoryList = ({ filteredItems, setGenre, setPage, children }) => {
           <center
             className="nav-item "
             onClick={() => {
-              setGenre();
+              setGenre(0);
               setPage(1);
             }}
           >

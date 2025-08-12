@@ -1,8 +1,12 @@
 import "./movieItem.css";
+import noImage from "../assets/images/noImage.png";
 import { BiSolidMoviePlay } from "react-icons/bi";
-const MovieItem = ({ title, poster, year, country, imdb_rating }) => {
+const MovieItem = ({ title, poster, year, country, imdb_rating, delay }) => {
   return (
-    <div className="card product-card h-10 border-0 shadow-sm pb-1">
+    <div
+      className="card product-card h-10 border-0 shadow-sm pb-1 fade-in-horiz"
+      style={{ animationDelay: delay + "s" }}
+    >
       <span
         className={`badge badge-end badge-shadow ${
           imdb_rating >= 9
@@ -15,7 +19,10 @@ const MovieItem = ({ title, poster, year, country, imdb_rating }) => {
         imdb: {imdb_rating}
       </span>
       <div className="card-img-top">
-        <img className="card-img-top" src={poster}></img>
+        <img
+          className="card-img-top"
+          src={poster === "https://moviesapi.ir/images/" ? noImage : poster}
+        ></img>
       </div>
       <div className="card-body text-center pt-3 pb-4 d-flex flex-column">
         <h5 className="mb-2">{title}</h5>
