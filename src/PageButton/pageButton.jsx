@@ -22,7 +22,6 @@ const PageButton = ({ action, changer, thisPage, lastPage }) => {
       className="rounded-3 "
       onClick={() => {
         changer(pageNumber);
-        console.log("push:" + pageNumber);
       }}
     >
       {action}

@@ -16,7 +16,8 @@ const MovieItem = ({ title, poster, year, country, imdb_rating, delay }) => {
             : "bg-danger"
         } fs-md fw-medium`}
       >
-        imdb: {imdb_rating}
+        imdb:
+        {imdb_rating}
       </span>
       <div className="card-img-top">
         <img

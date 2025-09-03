@@ -3,17 +3,16 @@ import { BsSearch } from "react-icons/bs";
 const SearchBar = ({
   searchItems,
   searchedValue,
-  searchedValueLength,
   page,
+  setPage,
 }) => {
   /* onSubmit function used to send request after Enter clicked */
   const onSubmit = (e) => {
     e.preventDefault();
     // setSearchValue(value);
-    page(1);
+    setPage(1);
     searchedValue(value);
-    searchItems(value);
-    searchedValueLength(value.length);
+    searchItems(value, page);
     // add debounce custom hook
     // add fallback
     // promise.all

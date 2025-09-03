@@ -16,9 +16,7 @@ function App() {
   const [moviesItems, setMoviesItems] = useState([]);
   const [metadata, setMetadata] = useState([]);
   const [genre, setGenre] = useState();
-  const [searchedValueLength, setSearchedValueLength] = useState(0);
-  const [searchedValue, setSearchedValue] = useState();
-  // const [searchValue, setSearchValue] = useState("");
+  const [searchedValue, setSearchedValue] = useState("");
   const fetchData = async (genreId = null) => {
     setLoading(true);
     const response = await axios.get(
@@ -29,42 +27,20 @@ function App() {
     setLoading(false);
     setMoviesItems(response.data.data);
     setMetadata(response.data.metadata);
-    // console.log(
-    //   "response data " + response.data.data.map((res) => console.log(res))
-    // );
-    // console.log(
-    //   "meta data2 " + response.data.metadata
-    // );
-    // console.log("meta data " + response.data.metadata);
-    // response.data.metadata.map(each=>console.log("meta data2 " + each))
   };
-  const fetchOrkideh = async () => {
-    const response2 = await fetch(
-      "https://opium.feeja.ir/api/v1/branches/chalus/menu/categories",
-      {
-        "Content-Type": "application/json",
-      }
-    );
-    const result = response2.json();
-    console.log(result);
-  };
-
-  useEffect(() => {
-    fetchOrkideh();
-  }, []);
   const handleClick = (event) => {
     let newPage = page + event;
-    if (searchedValueLength) {
-      searchItems(searchedValue, newPage);
-    } else {
-      if (newPage !== 0 && newPage <= metadata.page_count) {
-        setPage(newPage);
-      }
+    if (newPage !== 0 && newPage <= metadata.page_count) {
+      setPage(newPage);
     }
   };
 
   useEffect(() => {
-    fetchData(genre);
+    if (searchedValue.length === 0) {
+      fetchData(genre);
+    } else {
+      searchItems(searchedValue, page);
+    }
   }, [page, genre]);
   const renderContent = () => {
     if (loading) {
@@ -85,11 +61,9 @@ function App() {
   };
   // search proccess
   const searchItems = async (name, newPage) => {
-    console.log("🚀 ~ searchItems ~ thisPage:", newPage);
     try {
       if (name) {
         setLoading(true);
-
         const response = await axios.get(`/movies?q=${name}&page=${newPage}`);
         setMoviesItems(response.data.data);
         setMetadata(response.data.metadata);
@@ -119,10 +93,8 @@ function App() {
           <SearchBar
             searchItems={searchItems}
             searchedValue={setSearchedValue}
-            searchedValueLength={setSearchedValueLength}
-            page={setPage}
-            // searchValue={searchValue}
-            // setSearchValue={setSearchValue}
+            page={page}
+            setPage={setPage}
           />
         </CategoryList>
       </center>
@@ -135,28 +107,24 @@ function App() {
           changer={handleClick}
           thisPage={page}
           lastPage={metadata.page_count}
-          searchedValueLength={searchedValueLength}
         />
         <PageButton
           action="previous page"
           changer={handleClick}
           thisPage={page}
           lastPage={metadata.page_count}
-          searchedValueLength={searchedValueLength}
         />
         <PageButton
           action="next page"
           changer={handleClick}
           thisPage={page}
           lastPage={metadata.page_count}
-          searchedValueLength={searchedValueLength}
         />
         <PageButton
           action="last page"
           changer={handleClick}
           thisPage={page}
           lastPage={metadata.page_count}
-          searchedValueLength={searchedValueLength}
         />
       </center>
       <center>
