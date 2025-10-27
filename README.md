@@ -10,7 +10,7 @@ An elegant and fully responsive movie browsing web app built with **React.js**, 
 ## 🚀 Features
 
 ✅ **Live Search with Debounce**
-Search movies in real-time with 400ms debounce to reduce API load and improve UX.
+Search movies in real-time with a 400 ms debounce to reduce API load and improve UX.
 
 ✅ **Genre-Based Filtering (Category Chips)**
 Browse by movie genres using interactive chips with smooth hover and active effects.
@@ -71,8 +71,8 @@ src/
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/your-username/react-movie-browser.git
-cd react-movie-browser
+git clone https://github.com/HamidrezaKZE/movie-box.git
+cd movie-box
 npm install
 npm start
 ```
@@ -94,9 +94,9 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 💬 Author
 
-Developed with ❤️ by **[Hamidreza_KZE]**
+Developed with ❤️ by **[Hamidreza_KZE](https://github.com/HamidrezaKZE)**
 
-> Front-end Developer & UI/UX Enthusiast
+> Front-End Developer & UI/UX Enthusiast
 > GitHub: [@HamidrezaKZE](https://github.com/HamidrezaKZE)
 > LinkedIn: [linkedin.com/in/HamidrezaKamalzade](https://www.linkedin.com/in/hamidrezakamalzade/)
 
