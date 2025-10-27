@@ -1,30 +1,35 @@
-const PageButton = ({ action, changer, thisPage, lastPage }) => {
-  var pageNumber;
-  switch (action) {
-    case "next page":
-      pageNumber = +1;
-      break;
-    case "previous page":
-      pageNumber = -1;
-      break;
-    case "first page":
-      pageNumber = -thisPage + 1;
-      break;
-    case "last page":
-      pageNumber = lastPage - thisPage;
-      break;
-    default:
-      pageNumber = 0;
-      break;
-  }
+import "./pageButton.css";
+
+const PageButton = ({ type, currentPage, lastPage, onChange }) => {
+  const getTargetPage = () => {
+    switch (type) {
+      case "next":
+        return currentPage + 1;
+      case "previous":
+        return currentPage - 1;
+      case "first":
+        return 1;
+      case "last":
+        return lastPage;
+      default:
+        return currentPage;
+    }
+  };
+
+  const isDisabled =
+    (type === "previous" || type === "first") && currentPage === 1 ||
+    (type === "next" || type === "last") && currentPage === lastPage;
+
   return (
     <button
-      className="rounded-3 "
-      onClick={() => {
-        changer(pageNumber);
-      }}
+      className="page-btn"
+      onClick={() => !isDisabled && onChange(getTargetPage())}
+      disabled={isDisabled}
     >
-      {action}
+      {type === "first" && "First"}
+      {type === "previous" && "Previous"}
+      {type === "next" && "Next"}
+      {type === "last" && "Last"}
     </button>
   );
 };

@@ -1,0 +1,35 @@
+.page-btn {
+  display: inline-block;
+  padding: 8px 14px;
+  margin: 4px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #fff;
+  background: #3b82f6;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.page-btn:hover {
+  background: #2563eb; /*hover*/
+  transform: translateY(-1px);
+}
+
+.page-btn:active {
+  transform: translateY(0);
+  background: #1d4ed8;
+}
+
+.page-btn:disabled {
+  background: #4b5563; /*disabled color*/
+  color: #cbd5e1;
+  /* cursor: not-allowed; */
+  transform: none;
+  opacity: 0.7;
+}
+
+.page-btn:first-letter {
+  text-transform: uppercase;
+}

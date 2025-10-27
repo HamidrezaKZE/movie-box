@@ -346,6 +346,7 @@ button,
 [type="button"],
 [type="reset"],
 [type="submit"] {
+  appearance: button;
   -webkit-appearance: button;
 }
 button:not(:disabled),
@@ -397,6 +398,7 @@ legend + * {
 }
 [type="search"] {
   outline-offset: -2px;
+  appearance: textfield;
   -webkit-appearance: textfield;
 }
 ::-webkit-search-decoration {
@@ -2288,8 +2290,8 @@ textarea.form-control-lg {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  print-color-adjust: exact;
   -webkit-print-color-adjust: exact;
-  color-adjust: exact;
 }
 .form-check-input[type="checkbox"] {
   border-radius: 0.3125em;
@@ -15299,7 +15301,8 @@ a.nav-link:hover .media-tab-media {
   position: relative;
   text-decoration: none !important;
   overflow: hidden;
-  -webkit-mask-image: -webkit-radial-gradient(white, black);
+mask-image: radial-gradient(white, black);
+-webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 .gallery-item > img {
   display: block;

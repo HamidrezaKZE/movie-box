@@ -1,70 +1,108 @@
-# Getting Started with Create React App
+# 🎬 React Movie Browser App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An elegant and fully responsive movie browsing web app built with **React.js**, featuring live search, category filters, pagination, and smooth UX transitions.
 
-## Available Scripts
+![App Preview](./src/assets/images/preview1.jpg)
+![App Preview](./src/assets/images/preview2.jpg)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🚀 Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+✅ **Live Search with Debounce**
+Search movies in real-time with 400ms debounce to reduce API load and improve UX.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+✅ **Genre-Based Filtering (Category Chips)**
+Browse by movie genres using interactive chips with smooth hover and active effects.
 
-### `npm test`
+✅ **Smart Pagination System**
+Navigate through pages with intelligent button states (disabled at edges).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+✅ **Responsive Poster Cards**
+Consistent card layout with `aspect-ratio` handling and title truncation for long names.
 
-### `npm run build`
+✅ **Error & Loading States**
+Dynamic UI feedback for empty results, loading states, and network errors.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🧩 Tech Stack
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+| Layer           | Tools                                                       |
+| --------------- | ----------------------------------------------------------- |
+| **Frontend**    | React.js (Hooks, Functional Components)                     |
+| **HTTP Client** | Axios                                                       |
+| **Styling**     | Custom CSS (Flex + Grid)                                    |
+| **Icons**       | React Icons (`react-icons/bs`, `react-icons/md`, etc.)      |
+| **Animations**  | CSS transitions + fade-in keyframes                         |
+| **API Source**  | [MoviesAPI.ir](https://moviesapi.ir) (sample REST endpoint) |
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## ⚙️ Project Structure
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+src/
+ ├── App.js                # Main logic, data fetching, layout
+ ├── CategoryList/         # Genre filter bar (chips)
+ ├── SearchBar/            # Debounced search input
+ ├── MoviesList/           # Movie card grid
+ ├── MovieItem/            # Single movie card
+ ├── PageButton/           # Pagination controls
+ ├── Loading/              # Loading spinner component
+ ├── assets/               # Images, icons, static files
+ └── App.css               # Global responsive styles
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🧠 Key Improvements (v1.2.0)
 
-## Learn More
+* Rebuilt **SearchBar** with debounce, clear button, and animated loader
+* Introduced **chip-based category system**
+* Fixed inconsistent card sizes with new `.poster-wrapper`
+* Added responsive layouts for all screen sizes
+* Simplified and unified API calls under a single `fetchMovies()` function
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 📦 Installation
 
-### Code Splitting
+Clone the repository and install dependencies:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+git clone https://github.com/your-username/react-movie-browser.git
+cd react-movie-browser
+npm install
+npm start
+```
 
-### Analyzing the Bundle Size
+Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## 🧑‍💻 Development Scripts
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+| Command         | Description                       |
+| --------------- | --------------------------------- |
+| `npm start`     | Run in development mode           |
+| `npm run build` | Create optimized production build |
+| `npm test`      | Run test suite                    |
+| `npm run eject` | Expose React configs (optional)   |
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 💬 Author
 
-### Deployment
+Developed with ❤️ by **[Hamidreza_KZE]**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+> Front-end Developer & UI/UX Enthusiast
+> GitHub: [@HamidrezaKZE](https://github.com/HamidrezaKZE)
+> LinkedIn: [linkedin.com/in/HamidrezaKamalzade](https://www.linkedin.com/in/hamidrezakamalzade/)
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🌟 Show Your Support
+
+If you found this project helpful, please **star ⭐ the repository** and share it with others!
+

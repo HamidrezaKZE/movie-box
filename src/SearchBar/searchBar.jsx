@@ -1,42 +1,90 @@
-import { useState } from "react";
-import { BsSearch } from "react-icons/bs";
+import { useEffect, useState, useRef } from "react";
+import "./searchBar.css";
+import { MdCancel } from "react-icons/md";
+
 const SearchBar = ({
   searchItems,
   searchedValue,
-  page,
+  setSearchedValue,
+  setGenre,
   setPage,
 }) => {
-  /* onSubmit function used to send request after Enter clicked */
-  const onSubmit = (e) => {
-    e.preventDefault();
-    // setSearchValue(value);
-    setPage(1);
-    searchedValue(value);
-    searchItems(value, page);
-    // add debounce custom hook
-    // add fallback
-    // promise.all
-  };
   const [value, setValue] = useState("");
+  const [typing, setTyping] = useState(false);
+  const internalReset = useRef(false);
+  const DEBOUNCE_DELAY = 400;
+
+  useEffect(() => {
+    if (internalReset.current) {
+      internalReset.current = false;
+      return; // prevent triggering searchItems("") after chip click
+    }
+
+    if (value.trim() === "") {
+      searchItems("");
+      setTyping(false);
+      return;
+    }
+
+    setTyping(true);
+    const timer = setTimeout(() => {
+      searchItems(value);
+      setTyping(false);
+    }, DEBOUNCE_DELAY);
+
+    return () => clearTimeout(timer);
+  }, [value]);
+
+  useEffect(() => {
+    if (searchedValue === "") {
+      internalReset.current = true; // mark as programmatic reset
+    }
+    setValue(searchedValue || "");
+  }, [searchedValue]);
+
   return (
-    <form
-      onSubmit={onSubmit}
-      className="search flex-fill d-flex align-items-center py-2"
-    >
-      <div className="input-group ">
-        <input
-          className="form-control rounded-end ps-5 norder-success "
-          type="text"
-          placeholder="Search Movie's Name"
-          value={value}
-          onChange={(e) => {
-            setValue(e.target.value);
-            // searchItems(value);
+    <div className="search-bar">
+      <input
+        type="text"
+        className="search-input"
+        placeholder="Search movies..."
+        value={value}
+        onChange={(e) => {
+          const val = e.target.value;
+          setValue(val);
+          setSearchedValue(val);
+          // All Movies will be active when user type in search bar
+          if (val.trim().length > 0) {
+            setGenre(null);
+            setPage(1);
+          }
+        }}
+      />
+
+      {/* clear button */}
+      {!typing && value !== "" && (
+        <button
+          type="button"
+          className="btn-clear"
+          onClick={() => {
+            setValue("");
+            setSearchedValue("");
           }}
-        />
-        <BsSearch className="position-absolute top-50 translate-middle-y text-muted ms-3" />
-      </div>
-    </form>
+        >
+          <MdCancel />
+        </button>
+      )}
+
+      {/* 3 dots Loader */}
+      {typing && (
+        <div className="dots-loader">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      )}
+    </div>
   );
 };
+
 export default SearchBar;
