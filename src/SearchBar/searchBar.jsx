@@ -11,21 +11,32 @@ const SearchBar = ({
 }) => {
   const [value, setValue] = useState("");
   const [typing, setTyping] = useState(false);
+  const firstRender = useRef(true);
   const internalReset = useRef(false);
   const DEBOUNCE_DELAY = 400;
 
+  // handle debounced search input
   useEffect(() => {
-    if (internalReset.current) {
-      internalReset.current = false;
-      return; // prevent triggering searchItems("") after chip click
+    // avoid triggering on initial mount
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
     }
 
+    // skip immediate trigger after programmatic reset
+    if (internalReset.current) {
+      if (value.trim().length > 0) internalReset.current = false;
+      else return;
+    }
+
+    // empty value → show all movies
     if (value.trim() === "") {
       searchItems("");
       setTyping(false);
       return;
     }
 
+    // debounce user input
     setTyping(true);
     const timer = setTimeout(() => {
       searchItems(value);
@@ -35,10 +46,9 @@ const SearchBar = ({
     return () => clearTimeout(timer);
   }, [value]);
 
+  // sync external search value with internal input
   useEffect(() => {
-    if (searchedValue === "") {
-      internalReset.current = true; // mark as programmatic reset
-    }
+    if (searchedValue === "") internalReset.current = true;
     setValue(searchedValue || "");
   }, [searchedValue]);
 
@@ -53,7 +63,8 @@ const SearchBar = ({
           const val = e.target.value;
           setValue(val);
           setSearchedValue(val);
-          // All Movies will be active when user type in search bar
+
+          // reset filters when user starts searching
           if (val.trim().length > 0) {
             setGenre(null);
             setPage(1);
@@ -61,7 +72,6 @@ const SearchBar = ({
         }}
       />
 
-      {/* clear button */}
       {!typing && value !== "" && (
         <button
           type="button"
@@ -75,7 +85,6 @@ const SearchBar = ({
         </button>
       )}
 
-      {/* 3 dots Loader */}
       {typing && (
         <div className="dots-loader">
           <div></div>

@@ -1,31 +1,29 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "./axios";
 
 axios.defaults.baseURL = "https://moviesapi.ir/api/v1";
-const useAxios = (axiosParams) => {
-  const [response, setResponse] = useState(null);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const result = await axios.request(axiosParams);
-      setResponse(result.data);
 
-      //   setMoviesItems(response.data.data);
-      //   setMetadata(response.data.metadata);
-    } catch (error) {
-      setError(error);
-      console.error("Error fetching movies:", error);
+const useAxios = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchData = async (url) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await axios.get(url);
+      return response.data;
+    } catch (err) {
+      console.error("Error fetching data:", err);
+      setError("Something went wrong while fetching data. Please try again.");
+      return null;
     } finally {
-      console.log("🚀 ~ useAxios ~ response:", response);
       setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchData();
-  }, []);
-  return { response, error, loading };
+
+  return { fetchData, loading, error };
 };
 
 export default useAxios;
